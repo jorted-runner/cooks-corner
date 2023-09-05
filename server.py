@@ -180,8 +180,6 @@ def new_recipe():
         description = request.form.get("description")
         ingredients = request.form.get("ingredients")
         instructions = request.form.get("instructions")
-        # clean_ingredients = (BeautifulSoup(ingredients_list, "lxml").text).splitlines()
-        # clean_instructions = (BeautifulSoup(instructions, "lxml").text).splitlines()
         image_urls = RECIPE_AI.image_generation(title, description)
         return render_template('display_recipe.html', recipe_title = title, recipe_desc = description, ingredients = ingredients, instructions = instructions, images = image_urls)
         
