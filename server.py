@@ -222,12 +222,8 @@ def save_recipe():
         recipe_desc = request.form.get("description")
         ingredients = request.form.get("ingredients")
         instructions = request.form.get("instructions")
-        
-        recipe_id = request.form.get("recipe_id")  # Retrieve recipe_id from the form
-        
-        # Check if recipe_id exists to determine if it's a new recipe or an edit
+        recipe_id = request.form.get("recipe_id")
         if recipe_id:
-            # Editing an existing recipe
             existing_recipe = Recipe.query.get(recipe_id)
             
             if existing_recipe:
