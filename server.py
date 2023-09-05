@@ -221,6 +221,9 @@ def save_recipe(is_edit):
             recipe_image = request.form.get("recipe_image")
             file_name = download_image(recipe_image, recipe_title)
             file_url = upload_file(file_name)
+        else:
+            existing_recipe = Recipe.query.get()
+            file_url = existing_recipe.img_url
         new_recipe = Recipe(
             title=recipe_title,
             description=recipe_desc,
