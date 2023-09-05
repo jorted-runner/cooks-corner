@@ -10,6 +10,8 @@ aws_bucket = os.environ.get("AWS_BUCKET")
 aws_region = os.environ.get("AWS_REGION")
 
 def download_image(image_url, recipe_name):
+    if image_url is None:
+        return None 
     new_filename = uuid.uuid4().hex + ".jpg"
     filename = f"static/images/{new_filename}"
     img_data = requests.get(image_url).content
