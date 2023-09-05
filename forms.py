@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_ckeditor import CKEditorField
 
-from wtforms import StringField, SubmitField, TextAreaField, EmailField, PasswordField
+from wtforms import StringField, SubmitField, TextAreaField, EmailField, PasswordField, HiddenField
 from wtforms.validators import DataRequired, URL, Length
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
@@ -19,6 +19,7 @@ class Recipe(FlaskForm):
     save = SubmitField("Save Recipe")
 
 class NewRecipe(FlaskForm):
+    recipe_id = HiddenField("Recipe ID")
     title = StringField("Recipe Title", validators=[DataRequired()])
     description = TextAreaField("Recipe Description", validators=[DataRequired()])
     ingredients = CKEditorField("Ingredients", validators=[DataRequired()])
@@ -28,6 +29,12 @@ class NewRecipe(FlaskForm):
     #     FileAllowed(['jpg', 'png', 'jpeg', 'heic'], 'Images Only!')
     # ])
     save = SubmitField("Generate Recipe Images")
+
+    def set_submit_label(self, is_edit):
+        if is_edit:
+            self.save.label.text = "Save Changes"
+        else:
+            self.save.label.text = "Generate Recipe Images"
 
 class NewUser(FlaskForm):
     name = StringField("Full Name", validators=[DataRequired()])

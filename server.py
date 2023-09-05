@@ -175,6 +175,8 @@ def ai_generation():
 @login_required
 def new_recipe():
     new_recipe_form = NewRecipe()
+    is_edit = False
+    new_recipe_form.set_submit_label(is_edit)
     if new_recipe_form.validate_on_submit():
         title = request.form.get("title")
         description = request.form.get("description")
@@ -192,13 +194,15 @@ def new_recipe():
         # f.save(save_point)
         # return redirect(url_for('main_feed'))
 
-    return render_template('new_recipe.html', new_recipe_form = new_recipe_form, is_edit = False)
+    return render_template('new_recipe.html', new_recipe_form = new_recipe_form, is_edit = is_edit)
 
 @app.route("/edit-post/<recipe_id>", methods=["GET", "POST"])
 @admin_only
 def edit_recipe(recipe_id):
     recipe = Recipe.query.get(recipe_id)
-    edit_recipe_form = NewRecipe(title=recipe.title, description=recipe.description, ingredients=recipe.ingredients, instructions=recipe.instructions)
+    is_edit = True
+    edit_recipe_form = NewRecipe(recipe_id = recipe_id, title=recipe.title, description=recipe.description, ingredients=recipe.ingredients, instructions=recipe.instructions)
+    edit_recipe_form.set_submit_label(is_edit)
     if edit_recipe_form.validate_on_submit():
         recipe.title = edit_recipe_form.title.data
         recipe.description = edit_recipe_form.description.data
