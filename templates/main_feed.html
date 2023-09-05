@@ -28,27 +28,37 @@
                         <div class="ingredients">
                             <h4>Ingredients:</h4>    
                             {% set ingredients = recipe.ingredients | custom_split %}
-    
-                            {% for item in ingredients %}
-                                {% if item|safe == ',' %}
-                                    {{ pass }}
-                                {% else %}
-                                    {{ item|safe }}
-                                {% endif %}
-                            {% endfor %}
+                            {% set isList = ingredients | is_list_check %}
+
+                            {% if isList %}
+                                {% for item in ingredients %}
+                                    {% if item|safe == ',' %}
+                                        {{ pass }}
+                                    {% else %}
+                                        {{ item|safe }}
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                {{ ingredients | safe }}
+                            {% endif %}
+
                         </div>
                         <br>
                         <div class="instructions">
                             <h4>Instructions:</h4>
                             {% set instructions = recipe.instructions | custom_split %}
-    
-                            {% for step in instructions %}
-                                {% if step|safe == ',' %}
-                                    {{ pass }}
-                                {% else %}
-                                    {{ step|safe }}
-                                {% endif %}
-                            {% endfor %}
+                            {% set isList = instructions | is_list_check %}
+                            {% if isList %}
+                                {% for step in instructions %}
+                                    {% if step|safe == ',' %}
+                                        {{ pass }}
+                                    {% else %}
+                                        {{ step|safe }}
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                {{ recipe.instructions | safe }}
+                            {% endif %}
                         </div>
                         <br>
                         {% if current_user.id == recipe.user.id %}

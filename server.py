@@ -80,10 +80,20 @@ def string_to_list(list_as_string):
     return eval(list_as_string)
 
 @app.template_filter('custom_split')
-def custom_split(instuctions):
-    str_data = instuctions
-    list_data = ast.literal_eval(str_data)
+def custom_split(data):
+    str_data = data
+    if data.startswith('['):
+        list_data = ast.literal_eval(str_data)
+    else:
+        list_data = data
     return list_data
+
+@app.template_filter('is_list_check')
+def custom_split(data):
+    if type(data) == str:
+        return False
+    else:
+        return True
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -173,7 +183,7 @@ def new_recipe():
         # clean_ingredients = (BeautifulSoup(ingredients_list, "lxml").text).splitlines()
         # clean_instructions = (BeautifulSoup(instructions, "lxml").text).splitlines()
         image_urls = RECIPE_AI.image_generation(title, description)
-        return render_template('display_recipe.html', recipe_title = title, recipe_desc = description, ingredients_list = ingredients, instructions = instructions, images = image_urls)
+        return render_template('display_recipe.html', recipe_title = title, recipe_desc = description, ingredients = ingredients, instructions = instructions, images = image_urls)
         
         # This code allows to download an uploaded image #
         # f = new_recipe_form.uploaded_img.data
@@ -204,7 +214,7 @@ def edit_recipe(recipe_id):
 @login_required
 def save_recipe():
     if request.method == "POST":
-        recipe_title = request.form.get("recipe_title")
+        recipe_title = request.form.get('recipe_title')
         recipe_image = request.form.get("recipe_image")
         recipe_desc = request.form.get("recipe_desc")
         ingredients = request.form.get("ingredients")
