@@ -9,9 +9,9 @@
 {% endfor %}
 
     <br><br>
-    <form id="recipeForm" action="{{ url_for('save_recipe', is_edit = False) }}" method="POST">
-        <input type="hidden" name="recipe_title" value="{{ recipe_title }}">
-        <input type="hidden" name="recipe_desc" value="{{ recipe_desc }}">
+    <form id="recipeForm" action="{{ url_for('save_recipe') }}" method="POST">
+        <input type="hidden" name="title" value="{{ recipe_title }}">
+        <input type="hidden" name="description" value="{{ recipe_desc }}">
         <input type="hidden" name="instructions" value="{{ instructions }}">
         <input type="hidden" name="ingredients" value="{{ ingredients }}">
         <p>Please select the image you would like to use for your recipe:</p>
