@@ -89,7 +89,7 @@ def custom_split(data):
     return list_data
 
 @app.template_filter('is_list_check')
-def custom_split(data):
+def is_list_check(data):
     if type(data) == str:
         return False
     else:
