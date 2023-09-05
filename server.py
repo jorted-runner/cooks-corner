@@ -148,7 +148,6 @@ def ai_generation():
         exclude = new_recipe_prompt.items_exclude.data
         recipe = RECIPE_AI.recipe_generation(include, exclude)
         soup = BeautifulSoup(recipe, 'html.parser')
-        # Extract title, description, ingredients, and instructions
         title = str(soup.find('h2')) if soup.find('h2') else "No title found"
         description = str(soup.find('p')) if soup.find('p') else "No description found"
 
@@ -169,12 +168,12 @@ def new_recipe():
     if new_recipe_form.validate_on_submit():
         title = request.form.get("title")
         description = request.form.get("description")
-        ingredients_list = request.form.get("ingredients")
+        ingredients = request.form.get("ingredients")
         instructions = request.form.get("instructions")
-        clean_ingredients = (BeautifulSoup(ingredients_list, "lxml").text).splitlines()
-        clean_instructions = (BeautifulSoup(instructions, "lxml").text).splitlines()
+        # clean_ingredients = (BeautifulSoup(ingredients_list, "lxml").text).splitlines()
+        # clean_instructions = (BeautifulSoup(instructions, "lxml").text).splitlines()
         image_urls = RECIPE_AI.image_generation(title, description)
-        return render_template('display_recipe.html', recipe_title = title, recipe_desc = description, ingredients_list = clean_ingredients, instructions = clean_instructions, images = image_urls)
+        return render_template('display_recipe.html', recipe_title = title, recipe_desc = description, ingredients_list = ingredients, instructions = instructions, images = image_urls)
         
         # This code allows to download an uploaded image #
         # f = new_recipe_form.uploaded_img.data
@@ -191,10 +190,7 @@ def new_recipe():
 @admin_only
 def edit_recipe(recipe_id):
     recipe = Recipe.query.get(recipe_id)
-    cleaned_ingredients = [item.strip() for item in string_to_list(recipe.ingredients) if item.strip()]
-    print(cleaned_ingredients)
-    print(custom_split(str(cleaned_ingredients)))
-    edit_recipe_form = NewRecipe(title=recipe.title, description=recipe.description, ingredients=cleaned_ingredients, instructions=recipe.instructions)
+    edit_recipe_form = NewRecipe(title=recipe.title, description=recipe.description, ingredients=recipe.ingredients, instructions=recipe.instructions)
     if edit_recipe_form.validate_on_submit():
         recipe.title = edit_recipe_form.title.data
         recipe.description = edit_recipe_form.description.data
