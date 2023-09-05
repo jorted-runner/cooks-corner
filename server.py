@@ -208,17 +208,19 @@ def edit_recipe(recipe_id):
         return redirect(url_for("main_feed"))
     return render_template ("new_recipe.html", new_recipe_form = edit_recipe_form, is_edit = True, current_user=current_user)
 
-@app.route("/save-recipe", methods=["POST"])
+@app.route("/save-recipe/<is_edit>", methods=["POST"])
 @login_required
-def save_recipe():
+def save_recipe(is_edit):
+    file_url = None
     if request.method == "POST":
-        recipe_title = request.form.get('recipe_title')
-        recipe_image = request.form.get("recipe_image")
-        recipe_desc = request.form.get("recipe_desc")
+        recipe_title = request.form.get('title')
+        recipe_desc = request.form.get("description")
         ingredients = request.form.get("ingredients")
         instructions = request.form.get("instructions")
-        file_name = download_image(recipe_image, recipe_title)
-        file_url = upload_file(file_name)
+        if not is_edit:
+            recipe_image = request.form.get("recipe_image")
+            file_name = download_image(recipe_image, recipe_title)
+            file_url = upload_file(file_name)
         new_recipe = Recipe(
             title=recipe_title,
             description=recipe_desc,

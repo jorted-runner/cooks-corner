@@ -4,10 +4,14 @@
 <body>
     {% if is_edit: %}
         <h1>Edit Recipe</h1>
-        {% else: %}
+    {% else: %}
         <h1>New Recipe</h1>
     {% endif %}
     <div class="form">
+        {% if is_edit %}
+            <form method="POST" action="{{ url_for('save_recipe', is_edit = True) }}">
+        {% endif %}
+
         {{ wtf.quick_form(new_recipe_form, novalidate=True, button_map={"submit": "secondary"}) }}
         {{ ckeditor.load() }}
         <br>

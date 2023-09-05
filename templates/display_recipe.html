@@ -12,7 +12,7 @@
 <!-- This is where the display part was -->
 
     <br><br>
-    <form id="recipeForm" action="{{ url_for('save_recipe') }}" method="POST">
+    <form id="recipeForm" action="{{ url_for('save_recipe', is_edit = False) }}" method="POST">
         <!-- this is where the hidden inputs -->
         <input type="hidden" name="recipe_title" value="{{ recipe_title }}">
         <input type="hidden" name="recipe_desc" value="{{ recipe_desc }}">
