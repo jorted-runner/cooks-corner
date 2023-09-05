@@ -207,7 +207,7 @@ def save_recipe():
         recipe_title = request.form.get("recipe_title")
         recipe_image = request.form.get("recipe_image")
         recipe_desc = request.form.get("recipe_desc")
-        ingredients = request.form.get("ingredients_list")
+        ingredients = request.form.get("ingredients")
         instructions = request.form.get("instructions")
         file_name = download_image(recipe_image, recipe_title)
         file_url = upload_file(file_name)
