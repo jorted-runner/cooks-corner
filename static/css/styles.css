@@ -57,7 +57,8 @@ body {
 .card__face--back {
     background-color: var(--light);
     transform: rotateY(180deg);
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .card__content {
