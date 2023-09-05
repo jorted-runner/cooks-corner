@@ -11,7 +11,8 @@ from datetime import date
 from functools import wraps
 from bs4 import BeautifulSoup
 
-import os 
+import os
+import ast
 
 from chat_gpt import chatGPT
 from forms import RecipePrompt, NewUser, UserLogin, NewRecipe
@@ -80,20 +81,9 @@ def string_to_list(list_as_string):
 
 @app.template_filter('custom_split')
 def custom_split(instuctions):
-    print(instuctions)
-    instuctions = instuctions.split('\n')
-    cleaned_instructions = []
-    for step in instuctions:
-        if "['" in step or "']" in step:
-            step = step.translate({ord('['):None})
-            step = step.translate({ord(']'):None})
-            step = step.translate({ord("'"):None})
-            cleaned_instructions.append(step)
-        else:
-            print(type(step))
-            cleaned_instructions.append(step)
-    print(cleaned_instructions)
-    return cleaned_instructions
+    str_data = instuctions
+    list_data = ast.literal_eval(str_data)
+    return list_data
 
 @login_manager.user_loader
 def load_user(user_id):

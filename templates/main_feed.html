@@ -27,8 +27,14 @@
                     <div class="card__body">
                         <div class="ingredients">
                             <h4>Ingredients:</h4>    
-                            {% for item in recipe.ingredients %}
-                                {{ item | safe }}
+                            {% set ingredients = recipe.ingredients | custom_split %}
+    
+                            {% for item in ingredients %}
+                                {% if item|safe == ',' %}
+                                    {{ pass }}
+                                {% else %}
+                                    {{ item|safe }}
+                                {% endif %}
                             {% endfor %}
                         </div>
                         <br>
