@@ -61,7 +61,8 @@ body {
 }
 
 .card__content {
-    width: 100%;
+    margin: 25px;
+    width: 85%;
     height: 100%;
 }
 
