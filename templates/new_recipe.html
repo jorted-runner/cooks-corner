@@ -1,0 +1,22 @@
+{% include "header.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+<body>
+    {% if is_edit: %}
+        <h1>Edit Recipe</h1>
+        {% else: %}
+        <h1>New Recipe</h1>
+    {% endif %}
+    <div class="form">
+        {{ wtf.quick_form(new_recipe_form, novalidate=True, button_map={"submit": "secondary"}) }}
+        {{ ckeditor.load() }}
+        <br>
+        {{ ckeditor.config(name='ingredients', language='en', width=500) }}
+        <br>
+        {{ ckeditor.config(name='instructions', language='en', width=500) }}
+        <br>  
+    </div>
+
+</body>
+
+{% include "footer.html" %}

@@ -1,0 +1,64 @@
+{% include "header.html" %}
+<br>
+<div class="recipe_feed">
+    {% for recipe in all_recipes %}
+
+    <div class="card">
+        <div class="card__inner">
+            <div class="card__face card__face--front">
+                <h2 class="front-title">{{ recipe.title | safe }}</h2>
+                <h3>{{ recipe.user.username | safe }}</h3>
+                <img class="recipe-img" src="{{ recipe.img_url }}">
+                <p class="recipe-desc">
+                    {{ recipe.description | safe }}
+                </p>
+            </div>
+            <div class="card__face card__face--back">
+                <div class="card__content">
+                    <div class="card__header">
+                        <h2 class="back-title">{{ recipe.title | safe }}</h2>
+                        <h5>{{ recipe.user.username  | safe }}</h5>
+                        <br>
+                        <p class="recipe-desc">
+                            {{ recipe.description | safe }}
+                        </p>
+                    </div>
+                    <br>
+                    <div class="card__body">
+                        <div class="ingredients">
+                            <h4>Ingredients:</h4>    
+                            {% for item in recipe.ingredients %}
+                                {{ item | safe }}
+                            {% endfor %}
+                        </div>
+                        <br>
+                        <div class="instructions">
+                            <h4>Instructions:</h4>
+                            {% set instructions = recipe.instructions | custom_split %}
+    
+                            {% for step in instructions %}
+                                {% if step|safe == ',' %}
+                                    {{ pass }}
+                                {% else %}
+                                    {{ step|safe }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <br>
+                        {% if current_user.id == recipe.user.id %}
+                            <a href="{{url_for('edit_recipe', recipe_id=recipe.id) }}">Edit Recipe</a>
+
+                            <button>Delete Recipe</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    {% endfor %}
+</div>
+<script src="static\scripts\main.js"></script>
+
+{% include "footer.html" %}

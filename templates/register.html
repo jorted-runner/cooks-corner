@@ -1,0 +1,13 @@
+{% include "header.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+<body>
+    <h3>User Registration</h3>
+
+    <div class="form">
+        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "secondary"}) }}
+    </div>
+
+</body>
+
+{% include "footer.html" %}
