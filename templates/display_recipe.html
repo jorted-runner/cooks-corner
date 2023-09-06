@@ -2,12 +2,6 @@
 
 {{ recipe | safe }}
 
-{{ ingredients | safe }}
-
-{% for ingredient in ingredients %}
-{{ ingredient | safe }}
-{% endfor %}
-
     <br><br>
     <form id="recipeForm" action="{{ url_for('save_recipe') }}" method="POST">
         <input type="hidden" name="title" value="{{ recipe_title }}">
