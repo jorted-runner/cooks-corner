@@ -11,8 +11,8 @@ gpt_3_url = "https://api.openai.com/v1/chat/completions"
 
 class chatGPT():
 
-  def image_generation(self, title, description):
-    prompt = f"{title}. {description}"
+  def image_generation(self, title, description, ingredients):
+    prompt = f"{title}. {description}. {ingredients}"
     response = openai.Image.create(
       prompt = prompt,
       n = 2,
@@ -33,13 +33,5 @@ class chatGPT():
       ]
     )
     recipe = response.choices[0].message.content
-    # recipe_parts = recipe.split("Ingredients:")
-    # header = recipe_parts[0].strip()
-    # header_parts = header.split("Description:")
-    # title = header_parts[0].strip().split("Title:")[1]
-    # description = header_parts[1]
-    # ingredients = recipe_parts[1].split("Instructions:")[0].strip()
-    # instructions = recipe_parts[1].split("Instructions:")[1].strip()
-    # ingredients_list = ingredients.split("- ")
     return recipe
     

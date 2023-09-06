@@ -166,7 +166,7 @@ def ai_generation():
 
         instructions_list = soup.find('ol')
         instructions = [str(instruction) for instruction in instructions_list.find_all('li')] if instructions_list else []
-        image_urls = RECIPE_AI.image_generation(title, description)
+        image_urls = RECIPE_AI.image_generation(title, description, ingredients)
         return render_template('display_recipe.html', recipe = recipe, recipe_title = title, recipe_desc = description, instructions = instructions, ingredients = ingredients, images = image_urls)
     
     return render_template('recipe_generation.html', prompt_form = new_recipe_prompt)
@@ -182,7 +182,7 @@ def new_recipe():
         description = request.form.get("description")
         ingredients = request.form.get("ingredients")
         instructions = request.form.get("instructions")
-        image_urls = RECIPE_AI.image_generation(title, description)
+        image_urls = RECIPE_AI.image_generation(title, description, ingredients)
         return render_template('display_recipe.html', recipe_title = title, recipe_desc = description, ingredients = ingredients, instructions = instructions, images = image_urls)
         
         # This code allows to download an uploaded image #
@@ -268,7 +268,7 @@ def regen_images():
         data = request.get_json()
         title = data['title']
         description = data['description']
-        prompt = f"{title}. {description}"
+        prompt = f"{title}. {description}. {data['ingredients']}"
         image_urls = RECIPE_AI.image_generation(prompt)
         return jsonify(images=image_urls)
     except Exception as e:
