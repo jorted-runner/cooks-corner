@@ -8,22 +8,18 @@ cardArray.forEach(function(elem) {
 
 function confirmDelete(recipeId) {
     Swal.fire({
-      title: 'Confirm Deletion',
-      text: 'Are you sure you want to delete this recipe from Cooks Corner?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it',
-      cancelButtonText: 'No, cancel',
+        title: 'Are you sure?',
+        text: 'You won\'t be able to revert this!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
-      if (result.isConfirmed) {
-      } else {
-      }
-    }).then(() => {
-      const form = document.querySelector(`#delete-form-${recipeId}`);
-      form.submit();
-    }).catch(error => {
-      console.error(error);
+        if (result.isConfirmed) {
+            document.forms['deleteRecipeForm_' + recipeId].submit();
+        }
     });
-  }
-  
+}
+
     

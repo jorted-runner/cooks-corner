@@ -66,9 +66,10 @@
                                 <button type="submit" class="btn btn-danger">Edit Recipe</button>
                             </form>
 
-                            <form action="{{ url_for('delete_recipe', recipe_id=recipe.id) }}" method="POST">
-                                <button type="submit" class="btn btn-danger" onclick="confirmDelete('{{ recipe.id }}')">Delete Recipe</button>
+                            <form action="{{ url_for('delete_recipe', recipe_id=recipe.id) }}" method="POST" name="deleteRecipeForm_{{ recipe.id }}">
+                                <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ recipe.id }}')">Delete Recipe</button>
                             </form>
+                            
                         {% endif %}
                     </div>
                 </div>
