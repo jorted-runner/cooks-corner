@@ -18,8 +18,8 @@ body {
 
 .card {
     margin: 25px auto 25px;
-    width: 400px;
-    height: 600px;
+    width: 500px;
+    height: 700px;
     perspective: 1000px;
 }
 
@@ -49,9 +49,13 @@ body {
 
 .card__face--front {
     background-color: var(--light);
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: center;
+}
+
+.front-title {
+    grid-column: 1;
 }
 
 .card__face--back {

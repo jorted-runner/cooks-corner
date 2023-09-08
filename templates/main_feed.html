@@ -7,11 +7,9 @@
         <div class="card__inner">
             <div class="card__face card__face--front">
                 <h2 class="front-title">{{ recipe.title | safe }}</h2>
-                <h3>{{ recipe.user.username | safe }}</h3>
-                <img class="recipe-img" src="{{ recipe.img_url }}">
-                <p class="recipe-desc">
-                    {{ recipe.description | safe }}
-                </p>
+                <h5 class="front-username">{{ recipe.user.username | safe }}</h5>
+                <img id="front-img" class="recipe-img" src="{{ recipe.img_url }}">
+                <button class="comment-button">Comments</button>
             </div>
             <div class="card__face card__face--back">
                 <div class="card__content">
