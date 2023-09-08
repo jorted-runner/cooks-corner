@@ -196,8 +196,8 @@ def new_recipe():
 
     return render_template('new_recipe.html', new_recipe_form = new_recipe_form, is_edit = is_edit)
 
-@app.route("/edit-post/<recipe_id>", methods=["GET", "POST"])
-@admin_only
+@app.route("/edit-recipe/<recipe_id>", methods=["GET", "POST"])
+@login_required
 def edit_recipe(recipe_id):
     recipe = Recipe.query.get(recipe_id)
     is_edit = True
@@ -212,7 +212,13 @@ def edit_recipe(recipe_id):
         return redirect(url_for("main_feed"))
     return render_template ("new_recipe.html", new_recipe_form = edit_recipe_form, is_edit = True, current_user=current_user)
 
-
+@app.route("/delete-recipe/<recipe_id>", methods=["GET", "POST"])
+@login_required
+def delete_recipe(recipe_id):
+    recipe_to_delete = Recipe.query.filter_by(id=recipe_id).first()
+    db.session.delete(recipe_to_delete)
+    db.session.commit()
+    return redirect(url_for('main_feed'))
 
 @app.route("/save-recipe", methods=["POST"])
 @login_required
