@@ -158,7 +158,8 @@ def ai_generation():
         exclude = new_recipe_prompt.items_exclude.data
         recipe = RECIPE_AI.recipe_generation(include, exclude)
         soup = BeautifulSoup(recipe, 'html.parser')
-        title = str(soup.find('h2')) if soup.find('h2') else "No title found"
+        title_element = soup.find('h2')
+        title = title_element.text if title_element else "No title found"
         description = str(soup.find('p')) if soup.find('p') else "No description found"
 
         ingredients_list = soup.find('ul')

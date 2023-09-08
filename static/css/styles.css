@@ -14,11 +14,13 @@
 body {
     width: 100%;
     min-height: 100vh;
+    margin: auto;
 }
 
 .card {
     margin: 25px auto 25px;
-    width: 500px;
+    width: 85%;
+    max-width: 550px;
     height: 700px;
     perspective: 1000px;
 }
@@ -52,10 +54,52 @@ body {
     display: grid;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .front-title {
-    grid-column: 1;
+    margin: auto;
+    grid-column-start: 1;
+    grid-column-end: 5;
+    max-width: calc(100% - 50px);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: left;
+    align-items: start;
+}
+
+.front-username {
+    margin: auto;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row: 1;
+    max-width: calc(100% - 50px);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+#front-img.recipe-img {
+    max-width: 100%;
+    height: auto;
+    grid-column-start: 1;
+    grid-column-end: 6;
+    margin: 0 auto;
+}
+
+.follow-btn {
+    width: 80%;
+    grid-column: 2;
+    grid-row: 0;
+    margin: auto;
+    align-content: center;
+}
+
+.comment-button {
+    grid-row: 4;
+    margin: auto;
+    align-content: start;
 }
 
 .card__face--back {
@@ -87,4 +131,16 @@ body {
     z-index: -1;
     border-radius: 0 0 50% 0;
     background-color: var(--light);
+}
+
+@media screen and (min-width: 768px) {
+    .card {
+        width: 60%;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .card {
+        width: 40%;
+    }
 }
