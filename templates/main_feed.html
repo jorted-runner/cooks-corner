@@ -6,14 +6,23 @@
     <div class="card">
         <div class="card__inner">
             <div class="card__face card__face--front">
-                <h4 class="front-username">{{ recipe.user.username | safe }}</h4>
-                <!-- Don't forget to change this back to != -->
-                {% if current_user.id == recipe.user.id %}
-                    <button class="follow-btn">Follow User</button>
-                {% endif %}
-                <img id="front-img" class="recipe-img" src="{{ recipe.img_url }}">
-                <h2 class="front-title">{{ recipe.title | safe }}</h2>
-                <button class="comment-button">Comments</button>
+                <div class="front-header">
+                    <h4 class="front-username">{{ recipe.user.username | safe }}</h4>
+                    <!-- Don't forget to change this back to != -->
+                    {% if current_user.id == recipe.user.id %}
+                        <button class="follow-btn">Follow User</button>
+                    {% endif %}
+                </div>
+                <div class="front-img">
+                    <img id="front-img" class="recipe-img" src="{{ recipe.img_url }}">
+                </div>
+                <div class="front-footer">
+                    <h2 class="front-title">{{ recipe.title | safe }}</h2>
+                    <button class="comment-button">Comments</button>
+                </div>
+                <div class="comment-section">
+
+                </div>
             </div>
             <div class="card__face card__face--back">
                 <div class="card__content">

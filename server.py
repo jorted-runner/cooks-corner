@@ -81,6 +81,12 @@ class Recipe(db.Model):
 with app.app_context():
     db.create_all()
 
+def list_to_str(list):
+    str_data = ''
+    for line in list:
+        str_data += line
+    return str_data
+
 @app.template_filter('string_to_list')
 def string_to_list(list_as_string):
     return eval(list_as_string)
@@ -169,10 +175,10 @@ def ai_generation():
         description = str(soup.find('p')) if soup.find('p') else "No description found"
 
         ingredients_list = soup.find('ul')
-        ingredients = [str(ingredient) for ingredient in ingredients_list.find_all('li')] if ingredients_list else []
+        ingredients = list_to_str([str(ingredient) for ingredient in ingredients_list.find_all('li')] if ingredients_list else [])
 
         instructions_list = soup.find('ol')
-        instructions = [str(instruction) for instruction in instructions_list.find_all('li')] if instructions_list else []
+        instructions = list_to_str([str(instruction) for instruction in instructions_list.find_all('li')] if instructions_list else [])
         image_urls = RECIPE_AI.image_generation(title, description, ingredients)
         return render_template('display_recipe.html', recipe = recipe, recipe_title = title, recipe_desc = description, instructions = instructions, ingredients = ingredients, images = image_urls)
     
