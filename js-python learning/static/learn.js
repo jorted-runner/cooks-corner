@@ -4,7 +4,7 @@ function sendData() {
         url: '/process',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({ 'value': value }),
+        data: JSON.stringify({ 'value': value , 'default': 'This is the default value'}),
         success: function(response) {
             document.getElementById('output').innerHTML = response.result;
         },
