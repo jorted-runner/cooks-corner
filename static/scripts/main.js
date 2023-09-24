@@ -22,4 +22,10 @@ function confirmDelete(recipeId) {
     });
 }
 
+
+const regenButton = document.querySelector("#regenButton").addEventListener("click", regenImages);
+function regenImages() {
+    let imagesArray = document.querySelectorAll('.recipeImg');
+    console.log(imagesArray);
+}
     

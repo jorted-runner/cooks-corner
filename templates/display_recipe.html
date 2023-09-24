@@ -11,15 +11,14 @@
         <p>Please select the image you would like to use for your recipe:</p>
         {% for image in images %}
             <div class="image-group">
-               
                 <input type="radio" id="image_{{ loop.index0 }}" name="recipe_image" value="{{ image }}">
-                <label for="image_{{ loop.index0 }}"><img src="{{ image }}" alt="Recipe Image"></label>
+                <label for="image_{{ loop.index0 }}"><img class="recipeImg" src="{{ image }}" alt="Recipe Image"></label>
             </div>
         {% endfor %}
         <br>
         <button type="submit" form="recipeForm" id="submitButton">Save Recipe</button>
     </form>
-    
+    <button id="regenButton">Regenerate Images</button>
    
 
     
