@@ -11,8 +11,8 @@ gpt_3_url = "https://api.openai.com/v1/chat/completions"
 
 class chatGPT():
 
-  def image_generation(self, title, description, ingredients):
-    prompt = f"{title}. {description}. {ingredients}"
+  def image_generation(self, title, ingredients):
+    prompt = f"{title}. {ingredients}"
     response = openai.Image.create(
       prompt = prompt,
       n = 2,

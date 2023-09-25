@@ -25,9 +25,9 @@ function confirmDelete(recipeId) {
 
 const regenButton = document.querySelector("#regenButton").addEventListener("click", regenImages);
 function regenImages() {
-    let recipeTitle = document.querySelector("#displayTitle");
-    let recipeDesc = document.querySelector("#displayDesc");
-    let recipeIngredients = document.querySelector("#displayIngredients");
+    let recipeTitle = document.querySelector("#displayTitle").value;
+    let recipeDesc = document.querySelector("#displayDesc").value;
+    let recipeIngredients = document.querySelector("#displayIngredients").value;
     console.log(recipeTitle, recipeDesc, recipeIngredients)
     let imagesArray = document.querySelectorAll('.recipeImg');
     $.ajax({
@@ -36,7 +36,9 @@ function regenImages() {
         contentType: 'application/json',
         data: JSON.stringify({ 'title': recipeTitle , 'desc': recipeDesc, 'ingredients': recipeIngredients}),
         success: function(response) {
-            console.log(response);
+            for (let i = 0, len = imagesArray.length; i < len; i++) {
+                imagesArray[i].src = response[i];
+            };
         },
         error: function(error) {
             console.log(error);

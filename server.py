@@ -179,7 +179,7 @@ def ai_generation():
 
         instructions_list = soup.find('ol')
         instructions = list_to_str([str(instruction) for instruction in instructions_list.find_all('li')] if instructions_list else [])
-        image_urls = RECIPE_AI.image_generation(title, description, ingredients)
+        image_urls = RECIPE_AI.image_generation(title, ingredients)
         return render_template('display_recipe.html', recipe = recipe, recipe_title = title, recipe_desc = description, instructions = instructions, ingredients = ingredients, images = image_urls)
     
     return render_template('recipe_generation.html', prompt_form = new_recipe_prompt)
@@ -195,7 +195,7 @@ def new_recipe():
         description = request.form.get("description")
         ingredients = request.form.get("ingredients")
         instructions = request.form.get("instructions")
-        image_urls = RECIPE_AI.image_generation(title, description, ingredients)
+        image_urls = RECIPE_AI.image_generation(title, ingredients)
         return render_template('display_recipe.html', recipe_title = title, recipe_desc = description, ingredients = ingredients, instructions = instructions, images = image_urls)
         
         # This code allows to download an uploaded image #
@@ -282,17 +282,11 @@ def save_recipe():
 @app.route("/regen_images", methods=["POST"])
 @admin_only
 def regen_images():
-    # I keep getting this error when trying to send the data to the server:
-    # jquery.min.js:2 
-    #  POST http://192.168.98.206:8080/regen_images 500 (INTERNAL SERVER ERROR)
-    # send	@	jquery.min.js:2
-    # ajax	@	jquery.min.js:2
-    # regenImages	@	main.js:31
     data = request.get_json()
     recipe_title = data['title']
     recipe_desc = data['desc']
     ingredients = data['ingredients']
-    images = RECIPE_AI.image_generation(recipe_title, recipe_desc, ingredients)
+    images = RECIPE_AI.image_generation(recipe_title, ingredients)
     return jsonify(images)
     
 @app.route('/logout')
