@@ -282,16 +282,18 @@ def save_recipe():
 @app.route("/regen_images", methods=["POST"])
 @admin_only
 def regen_images():
-    try:
-        data = request.get_json()
-        title = data['title']
-        description = data['description']
-        prompt = f"{title}. {description}. {data['ingredients']}"
-        image_urls = RECIPE_AI.image_generation(prompt)
-        return jsonify(images=image_urls)
-    except Exception as e:
-        app.logger.error(f"Error in regen_images route: {e}")
-        return jsonify(error=str(e)), 400
+    # I keep getting this error when trying to send the data to the server:
+    # jquery.min.js:2 
+    #  POST http://192.168.98.206:8080/regen_images 500 (INTERNAL SERVER ERROR)
+    # send	@	jquery.min.js:2
+    # ajax	@	jquery.min.js:2
+    # regenImages	@	main.js:31
+    data = request.get_json()
+    recipe_title = data['title']
+    recipe_desc = data['desc']
+    ingredients = data['ingredients']
+    images = RECIPE_AI.image_generation(recipe_title, recipe_desc, ingredients)
+    return jsonify(images)
     
 @app.route('/logout')
 def logout():

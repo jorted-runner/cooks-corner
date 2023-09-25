@@ -4,9 +4,9 @@
 
     <br><br>
     <form id="recipeForm" action="{{ url_for('save_recipe') }}" method="POST">
-        <input type="hidden" name="title" value="{{ recipe_title }}">
-        <input type="hidden" name="description" value="{{ recipe_desc }}">
-        <input type="hidden" name="instructions" value="{{ instructions }}">
+        <input type="hidden" name="title" id="displayTitle" value="{{ recipe_title }}">
+        <input type="hidden" name="description" id="displayDesc" value="{{ recipe_desc }}">
+        <input type="hidden" name="instructions" id="displayIngredients" value="{{ instructions }}">
         <input type="hidden" name="ingredients" value="{{ ingredients }}">
         <p>Please select the image you would like to use for your recipe:</p>
         {% for image in images %}

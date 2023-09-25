@@ -25,7 +25,22 @@ function confirmDelete(recipeId) {
 
 const regenButton = document.querySelector("#regenButton").addEventListener("click", regenImages);
 function regenImages() {
+    let recipeTitle = document.querySelector("#displayTitle");
+    let recipeDesc = document.querySelector("#displayDesc");
+    let recipeIngredients = document.querySelector("#displayIngredients");
+    console.log(recipeTitle, recipeDesc, recipeIngredients)
     let imagesArray = document.querySelectorAll('.recipeImg');
-    console.log(imagesArray);
+    $.ajax({
+        url: '/regen_images',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ 'title': recipeTitle , 'desc': recipeDesc, 'ingredients': recipeIngredients}),
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
 }
     
