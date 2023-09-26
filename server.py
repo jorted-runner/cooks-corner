@@ -236,52 +236,51 @@ def delete_recipe(recipe_id):
 @app.route("/save-recipe", methods=["POST"])
 @login_required
 def save_recipe():
-    if request.method == "POST":
-        data = request.get_json()
-        recipe_title = data['title']
-        recipe_desc = data['description']
-        ingredients = data['ingredients']
-        instructions = data['instructions']
-        recipe_id = data['id'] 
-        if recipe_id:
-            existing_recipe = Recipe.query.get(recipe_id)
-            
-            if existing_recipe:
-                if not existing_recipe.img_url:
-                    recipe_image = request.form.get("recipe_image")
-                    file_name = download_image(recipe_image, recipe_title)
-                    file_url = upload_file(file_name)
-                else:
-                    file_url = existing_recipe.img_url
-
-                existing_recipe.title = recipe_title
-                existing_recipe.description = recipe_desc
-                existing_recipe.ingredients = ingredients
-                existing_recipe.instructions = instructions
-                existing_recipe.img_url = file_url
-
-                db.session.commit()
-        else:
-            recipe_image = request.form.get("recipe_image")
-            file_name = download_image(recipe_image, recipe_title)
-            file_url = upload_file(file_name)
-
-            new_recipe = Recipe(
-                title=recipe_title,
-                description=recipe_desc,
-                ingredients=ingredients,
-                instructions=instructions,
-                img_url=file_url,
-                date_posted=date.today().strftime("%B %d, %Y"),
-                user_id=current_user.id        
-            )
-            db.session.add(new_recipe)
-            db.session.commit()
+    data = request.get_json()
+    recipe_title = data['title']
+    recipe_desc = data['description']
+    ingredients = data['ingredients']
+    instructions = data['instructions']
+    recipe_id = data['id'] 
+    if recipe_id:
+        existing_recipe = Recipe.query.get(recipe_id)
         
-        return redirect(url_for("main_feed"))
+        if existing_recipe:
+            if not existing_recipe.img_url:
+                recipe_image = data['image_url']
+                file_name = download_image(recipe_image, recipe_title)
+                file_url = upload_file(file_name)
+            else:
+                file_url = existing_recipe.img_url
+
+            existing_recipe.title = recipe_title
+            existing_recipe.description = recipe_desc
+            existing_recipe.ingredients = ingredients
+            existing_recipe.instructions = instructions
+            existing_recipe.img_url = file_url
+
+            db.session.commit()
+    else:
+        recipe_image = data['image_url']
+        file_name = download_image(recipe_image, recipe_title)
+        file_url = upload_file(file_name)
+
+        new_recipe = Recipe(
+            title=recipe_title,
+            description=recipe_desc,
+            ingredients=ingredients,
+            instructions=instructions,
+            img_url=file_url,
+            date_posted=date.today().strftime("%B %d, %Y"),
+            user_id=current_user.id        
+        )
+        db.session.add(new_recipe)
+        db.session.commit()
+    
+    return redirect(url_for("main_feed"))
 
 @app.route("/regen_images", methods=["POST"])
-@admin_only
+@login_required
 def regen_images():
     data = request.get_json()
     recipe_title = data['title']
