@@ -46,9 +46,8 @@ function regenImages() {
     });
 }
 
-const displaySubmitButton = document.querySelector("#displaySubmitbutton").addEventListener("click", submitRecipeForm);
+const displaySubmitButton = document.querySelector("#displaySubmitButton").addEventListener("click", submitRecipeForm);
 function submitRecipeForm(event) {
-    console.log("submitting form");
     event.preventDefault();
 
     const title = document.querySelector("#displayTitle").value;
@@ -64,9 +63,6 @@ function submitRecipeForm(event) {
         }
     });
     const recipeImg = selectedImageSrc;
-
-    console.log(title, description, instructions, ingredients, recipeImg);
-
     $.ajax({
         url: "/save-recipe",
         type: "POST",
@@ -74,6 +70,7 @@ function submitRecipeForm(event) {
         data: JSON.stringify({ 'title': title, 'description': description, 'instructions': instructions, 'ingredients': ingredients, 'image_url': recipeImg}),
         success: function (response) {
             console.log("success");
+            window.location.href = "/main_feed";
         },
         error: function (error) {
             console.log(error);

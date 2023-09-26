@@ -241,8 +241,9 @@ def save_recipe():
     recipe_desc = data['description']
     ingredients = data['ingredients']
     instructions = data['instructions']
-    recipe_id = data['id'] 
+    recipe_id = ''
     if recipe_id:
+        recipe_id = data['id']
         existing_recipe = Recipe.query.get(recipe_id)
         
         if existing_recipe:
@@ -276,8 +277,7 @@ def save_recipe():
         )
         db.session.add(new_recipe)
         db.session.commit()
-    
-    return redirect(url_for("main_feed"))
+    return jsonify({"success": "success"})
 
 @app.route("/regen_images", methods=["POST"])
 @login_required
