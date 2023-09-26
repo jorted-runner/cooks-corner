@@ -45,4 +45,26 @@ function regenImages() {
         }
     });
 }
+
+const displaySubmitButton = document.querySelector("#displaySubmitbutton").addEventListener("click", submitRecipeForm);
+function submitRecipeForm () {
+    const title = document.querySelector("#displayTitle").value;
+    const description = document.querySelector("#displayDesc").value;
+    const instructions = document.querySelector("#displayInstructions").value;
+    const ingredients = document.querySelector("#displayIngredients").value;
+    const recipeId = document.querySelector("#recipeId").value;
+    const recipeImg = document.querySelector("").value;
+    $.ajax({
+        url: "/save-recipe",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ 'title': title, 'description': description, 'instructions': instructions, 'ingredients': ingredients, 'id': recipeId }),
+        success: function (response) {
+            console.log("success");
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    })
+};
     

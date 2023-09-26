@@ -237,11 +237,12 @@ def delete_recipe(recipe_id):
 @login_required
 def save_recipe():
     if request.method == "POST":
-        recipe_title = request.form.get('title')
-        recipe_desc = request.form.get("description")
-        ingredients = request.form.get("ingredients")
-        instructions = request.form.get("instructions")
-        recipe_id = request.form.get("recipe_id")
+        data = request.get_json()
+        recipe_title = data['title']
+        recipe_desc = data['description']
+        ingredients = data['ingredients']
+        instructions = data['instructions']
+        recipe_id = data['id'] 
         if recipe_id:
             existing_recipe = Recipe.query.get(recipe_id)
             

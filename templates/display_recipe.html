@@ -3,11 +3,11 @@
 {{ recipe | safe }}
 
     <br><br>
-    <form id="recipeForm" action="{{ url_for('save_recipe') }}" method="POST">
+    <form>
         <input type="hidden" name="title" id="displayTitle" value="{{ recipe_title }}">
         <input type="hidden" name="description" id="displayDesc" value="{{ recipe_desc }}">
-        <input type="hidden" name="instructions" id="displayIngredients" value="{{ instructions }}">
-        <input type="hidden" name="ingredients" value="{{ ingredients }}">
+        <input type="hidden" name="instructions" id="displayInstructions" value="{{ instructions }}">
+        <input type="hidden" name="ingredients" id="displayIngredients" value="{{ ingredients }}">
         <p>Please select the image you would like to use for your recipe:</p>
         {% for image in images %}
             <div class="image-group">
@@ -16,9 +16,10 @@
             </div>
         {% endfor %}
         <br>
-        <button type="submit" form="recipeForm" id="submitButton">Save Recipe</button>
+        <button type="button" id="regenButton">Regenerate Images</button>
+        <button type="submit" id="displaySubmitButton">Save Recipe</button>
     </form>
-    <button id="regenButton">Regenerate Images</button>
+    
    
 
     
