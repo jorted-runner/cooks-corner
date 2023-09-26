@@ -47,27 +47,31 @@ function regenImages() {
 }
 
 const displaySubmitButton = document.querySelector("#displaySubmitbutton").addEventListener("click", submitRecipeForm);
-const radioButtons = document.querySelectorAll('input[name="recipe_image"]');
-    // Add a change event listener to each radio button
-radioButtons.forEach(function(radioButton) {
-    radioButton.addEventListener('change', function() {
-        // Get the value (image source) of the selected radio button
-        const selectedImageSrc = this.value;
-    });
-});
-function submitRecipeForm () {
+function submitRecipeForm(event) {
+    console.log("submitting form");
+    event.preventDefault();
+
     const title = document.querySelector("#displayTitle").value;
     const description = document.querySelector("#displayDesc").value;
     const instructions = document.querySelector("#displayInstructions").value;
     const ingredients = document.querySelector("#displayIngredients").value;
-    const recipeId = document.querySelector("#recipeId").value;
+
+    const radioButtons = document.querySelectorAll('input[name="recipe_image"]');
+    let selectedImageSrc;
+    radioButtons.forEach(function (radioButton) {
+        if (radioButton.checked) {
+            selectedImageSrc = radioButton.value;
+        }
+    });
     const recipeImg = selectedImageSrc;
-    console.log(title, description, instructions, ingredients, recipeId, recipeImg);
+
+    console.log(title, description, instructions, ingredients, recipeImg);
+
     $.ajax({
         url: "/save-recipe",
         type: "POST",
         contentType: "application/json",
-        data: JSON.stringify({ 'title': title, 'description': description, 'instructions': instructions, 'ingredients': ingredients, 'id': recipeId, 'image_url': recipeImg}),
+        data: JSON.stringify({ 'title': title, 'description': description, 'instructions': instructions, 'ingredients': ingredients, 'image_url': recipeImg}),
         success: function (response) {
             console.log("success");
         },
@@ -75,4 +79,4 @@ function submitRecipeForm () {
             console.log(error);
         }
     });
-};
+}
