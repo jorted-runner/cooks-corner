@@ -64,7 +64,7 @@ function submitRecipeForm(event) {
     });
     const recipeImg = selectedImageSrc;
     $.ajax({
-        url: "/save-recipe",
+        url: "/save-recipe/True",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({ 'title': title, 'description': description, 'instructions': instructions, 'ingredients': ingredients, 'image_url': recipeImg}),

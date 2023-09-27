@@ -4,7 +4,7 @@
 <body>
     {% if is_edit: %}
         <h1>Edit Recipe</h1>
-        <form method="POST" action="{{ url_for('save_recipe') }}">
+        <form method="POST" action="{{ url_for('save_recipe', isNew=False) }}">
     {% else: %}
         <h1>New Recipe</h1>
         <form method="POST" action="{{ url_for('new_recipe') }}">

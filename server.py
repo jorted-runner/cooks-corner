@@ -233,17 +233,37 @@ def delete_recipe(recipe_id):
     db.session.commit()
     return redirect(url_for('main_feed'))
 
-@app.route("/save-recipe", methods=["POST"])
+@app.route("/save-recipe/<isNew>", methods=["POST"])
 @login_required
-def save_recipe():
-    data = request.get_json()
-    recipe_title = data['title']
-    recipe_desc = data['description']
-    ingredients = data['ingredients']
-    instructions = data['instructions']
-    recipe_id = ''
-    if recipe_id:
-        recipe_id = data['id']
+def save_recipe(isNew):
+    if isNew:
+        data = request.get_json()
+        recipe_title = data['title']
+        recipe_desc = data['description']
+        ingredients = data['ingredients']
+        instructions = data['instructions']
+        recipe_image = data['image_url']
+        file_name = download_image(recipe_image, recipe_title)
+        file_url = upload_file(file_name)
+
+        new_recipe = Recipe(
+            title=recipe_title,
+            description=recipe_desc,
+            ingredients=ingredients,
+            instructions=instructions,
+            img_url=file_url,
+            date_posted=date.today().strftime("%B %d, %Y"),
+            user_id=current_user.id        
+        )
+        db.session.add(new_recipe)
+        db.session.commit()
+        return jsonify({"success": "success"})
+    else:
+        recipe_title = request.form.get('title')
+        recipe_desc = request.form.get("description")
+        ingredients = request.form.get("ingredients")
+        instructions = request.form.get("instructions")
+        recipe_id = request.form.get("recipe_id")
         existing_recipe = Recipe.query.get(recipe_id)
         
         if existing_recipe:
@@ -261,23 +281,7 @@ def save_recipe():
             existing_recipe.img_url = file_url
 
             db.session.commit()
-    else:
-        recipe_image = data['image_url']
-        file_name = download_image(recipe_image, recipe_title)
-        file_url = upload_file(file_name)
-
-        new_recipe = Recipe(
-            title=recipe_title,
-            description=recipe_desc,
-            ingredients=ingredients,
-            instructions=instructions,
-            img_url=file_url,
-            date_posted=date.today().strftime("%B %d, %Y"),
-            user_id=current_user.id        
-        )
-        db.session.add(new_recipe)
-        db.session.commit()
-    return jsonify({"success": "success"})
+        return render_template(url_for('main_feed'))
 
 @app.route("/regen_images", methods=["POST"])
 @login_required
