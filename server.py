@@ -1,9 +1,3 @@
-# https://www.youtube.com/watch?v=lSAFVMaaH-w
-# https://healeycodes.com/talking-between-languages
-# https://www.geeksforgeeks.org/pass-javascript-variables-to-python-in-flask/
-# https://dev.to/healeycodes/talking-to-python-from-javascript-and-back-again-31jf
-
-
 from flask import Flask, render_template, redirect, url_for, request, jsonify, abort, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
