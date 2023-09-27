@@ -22,7 +22,6 @@ function confirmDelete(recipeId) {
     });
 }
 
-
 const regenButton = document.querySelector("#regenButton").addEventListener("click", regenImages);
 function regenImages() {
     let recipeTitle = document.querySelector("#displayTitle").value;
