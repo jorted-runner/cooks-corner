@@ -5,6 +5,7 @@ from flask_ckeditor import CKEditor
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+from datetime import datetime
 
 from dotenv import load_dotenv
 from datetime import date
@@ -62,7 +63,7 @@ class Recipe(db.Model):
     img_url = db.Column(db.String(250), nullable=True)
     date_posted = db.Column(db.String(250), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # comments = db.relationship("Comment", backref='recipe')
+#     comments = db.relationship("Comment", backref='recipe')
 
 # class Comment(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
@@ -286,7 +287,16 @@ def regen_images():
     ingredients = data['ingredients']
     images = RECIPE_AI.image_generation(recipe_title, ingredients)
     return jsonify(images)
-    
+
+# @app.route('/recipe/<int:recipe_id>/add_comment', methods=['POST'])
+# def add_comment(recipe_id):
+#     body = request.form['body']
+#     comment = Comment(body=body, author_id=current_user.id, recipe_id=recipe_id)
+#     db.session.add(comment)
+#     db.session.commit()
+#     flash('Your comment has been added!', 'success')
+#     return redirect(url_for('recipe_detail', recipe_id=recipe_id))
+
 @app.route('/logout')
 def logout():
     logout_user()

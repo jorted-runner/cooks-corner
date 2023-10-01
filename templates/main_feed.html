@@ -82,6 +82,17 @@
                             </form>
                             
                         {% endif %}
+                        <!-- This needs to be modified so that it actually works still, I need to add the comment form to forsm.py -->
+                        <h2>Comments</h2>
+                        {% for comment in recipe.comments %}
+                          <div class="card mb-3">
+                            <div class="card-body">
+                              <p class="card-text">{{ comment.body }}</p>
+                              <p class="card-text"><small class="text-muted">{{ comment.date_posted.strftime('%Y-%m-%d %H:%M:%S') }}</small></p>
+                              <p class="card-text"><small class="text-muted">by {{ comment.author.username }}</small></p>
+                            </div>
+                          </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
