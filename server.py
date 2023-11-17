@@ -304,7 +304,7 @@ def logout():
 
 @app.route('/childrens-book')
 def book_image_generation():
-        return render_template("children-image.html")
+    return render_template("children-image.html")
 
 @app.route("/gen_images", methods=["POST"])
 def gen_images():
