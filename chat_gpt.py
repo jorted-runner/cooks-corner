@@ -22,6 +22,17 @@ class chatGPT():
     urls.append(response.data[0].url)
     urls.append(response.data[1].url)
     return urls
+  
+  def child_image(self, prompt):
+    response = openai.Image.create(
+      prompt = prompt,
+      n = 2,
+      size = "512x512"
+    )
+    urls = []
+    urls.append(response.data[0].url)
+    urls.append(response.data[1].url)
+    return urls
     
 
   def recipe_generation(self, include, exclude):

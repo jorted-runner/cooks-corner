@@ -302,5 +302,16 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
+@app.route('/childrens-book')
+def book_image_generation():
+        return render_template("children-image.html")
+
+@app.route("/gen_images", methods=["POST"])
+def gen_images():
+    data = request.get_json()
+    prompt = data['prompt']
+    images = RECIPE_AI.child_image(prompt=prompt)
+    return jsonify(images)
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port = 8080, debug=True)
