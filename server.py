@@ -238,7 +238,7 @@ def save_recipe(isNew):
         ingredients = data['ingredients']
         instructions = data['instructions']
         recipe_image = data['image_url']
-        file_name = download_image(recipe_image, recipe_title)
+        file_name = download_image(recipe_image)
         file_url = upload_file(file_name)
 
         new_recipe = Recipe(
@@ -264,7 +264,7 @@ def save_recipe(isNew):
         if existing_recipe:
             if not existing_recipe.img_url:
                 recipe_image = data['image_url']
-                file_name = download_image(recipe_image, recipe_title)
+                file_name = download_image(recipe_image)
                 file_url = upload_file(file_name)
             else:
                 file_url = existing_recipe.img_url
@@ -312,6 +312,16 @@ def gen_images():
     prompt = data['prompt']
     images = RECIPE_AI.child_image(prompt=prompt)
     return jsonify(images)
+
+@app.route("/save-childrens-book-image", methods=["POST"])
+def save_image():
+    data = request.get_json()
+    imageURL = data['image_url']
+    _filename = data['fileName']
+    print(imageURL)
+    print(_filename)
+    fileLocation = download_image(image_url=imageURL)
+    return jsonify(fileLocation)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port = 8080, debug=True)

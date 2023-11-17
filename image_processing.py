@@ -9,7 +9,7 @@ load_dotenv()
 aws_bucket = os.environ.get("AWS_BUCKET")
 aws_region = os.environ.get("AWS_REGION")
 
-def download_image(image_url, recipe_name):
+def download_image(image_url):
     if image_url is None:
         return None 
     new_filename = uuid.uuid4().hex + ".jpg"

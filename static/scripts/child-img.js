@@ -40,3 +40,32 @@ function generateImages() {
         }
     });
 }
+
+const SaveImage = document.querySelector("#saveImageButton").addEventListener("click", saveGeneratedImage);
+function saveGeneratedImage(event) {
+    event.preventDefault();
+    var fileName = document.querySelector('input[name="filename"]').value;
+    const radioButtons = document.querySelectorAll('input[name="child_image"]');
+    let selectedImageSrc;
+    radioButtons.forEach(function (radioButton) {
+        if (radioButton.checked) {
+            const imageId = radioButton.id.split("_")[1];
+            selectedImageSrc = document.querySelector(`#image-${imageId} img`).src;
+        }
+    });
+    
+    const selectedImage = selectedImageSrc;
+    $.ajax({
+        url: "/save-childrens-book-image",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ 'image_url': selectedImage, 'fileName': fileName }),
+        success: function (response) {
+            console.log("success");
+            window.location.href = "/childrens-book";
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
