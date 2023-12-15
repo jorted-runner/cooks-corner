@@ -223,6 +223,8 @@ def delete_recipe(recipe_id):
     db.session.commit()
     return redirect(url_for('main_feed'))
 
+
+# This function is going to get refactored. First I need to adjust new_recipe.html to handle the data better.
 @app.route("/save-recipe/<isNew>", methods=["POST"])
 @login_required
 def save_recipe(isNew):
