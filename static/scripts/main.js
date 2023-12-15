@@ -22,6 +22,7 @@ function confirmDelete(recipeId) {
     });
 }
 
+// Regen images from display_recipe.html
 const regenButton = document.querySelector("#regenButton").addEventListener("click", regenImages);
 function regenImages() {
     let recipeTitle = document.querySelector("#displayTitle").value;
@@ -44,7 +45,7 @@ function regenImages() {
         }
     });
 }
-
+// Submit recipe from display_recipe.html
 const displaySubmitButton = document.querySelector("#displaySubmitButton").addEventListener("click", submitRecipeForm);
 function submitRecipeForm(event) {
     event.preventDefault();
