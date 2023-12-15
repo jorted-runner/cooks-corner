@@ -1,3 +1,7 @@
+# Add loading screen for image/recipe generation
+# I also want to refactor the code. I feel like there is lots of spagheti code
+# or code that is repeated unnecessarily
+
 from flask import Flask, render_template, redirect, url_for, request, jsonify, abort, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
@@ -76,6 +80,8 @@ class Recipe(db.Model):
 with app.app_context():
     db.create_all()
 
+
+# This func is probably unnecessary
 def list_to_str(list):
     str_data = ''
     for line in list:
@@ -176,7 +182,6 @@ def ai_generation():
         instructions = list_to_str([str(instruction) for instruction in instructions_list.find_all('li')] if instructions_list else [])
         image_urls = RECIPE_AI.image_generation(title, ingredients)
         return render_template('display_recipe.html', recipe = recipe, recipe_title = title, recipe_desc = description, instructions = instructions, ingredients = ingredients, images = image_urls)
-    
     return render_template('recipe_generation.html', prompt_form = new_recipe_prompt)
 
 @app.route("/new-recipe", methods=["GET", "POST"])
@@ -192,16 +197,6 @@ def new_recipe():
         instructions = request.form.get("instructions")
         image_urls = RECIPE_AI.image_generation(title, ingredients)
         return render_template('display_recipe.html', recipe_title = title, recipe_desc = description, ingredients = ingredients, instructions = instructions, images = image_urls)
-        
-        # This code allows to download an uploaded image #
-        # f = new_recipe_form.uploaded_img.data
-        # filename = secure_filename(f.filename)
-        # save_point = os.path.join(
-        #     app.instance_path, 'photos', filename
-        # )
-        # f.save(save_point)
-        # return redirect(url_for('main_feed'))
-
     return render_template('new_recipe.html', new_recipe_form = new_recipe_form, is_edit = is_edit)
 
 @app.route("/edit-recipe/<recipe_id>", methods=["GET", "POST"])
