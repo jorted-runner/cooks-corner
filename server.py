@@ -197,7 +197,7 @@ def new_recipe():
         instructions = request.form.get("instructions")
         image_urls = RECIPE_AI.image_generation(title, ingredients)
         return render_template('display_recipe.html', recipe_title = title, recipe_desc = description, ingredients = ingredients, instructions = instructions, images = image_urls)
-    return render_template('new_recipe.html', new_recipe_form = new_recipe_form, is_edit = is_edit)
+    return render_template('edit_recipe.html', new_recipe_form = new_recipe_form, is_edit = is_edit)
 
 @app.route("/edit-recipe/<recipe_id>", methods=["GET", "POST"])
 @login_required
@@ -213,7 +213,7 @@ def edit_recipe(recipe_id):
         recipe.instructions = edit_recipe_form.instructions.data    
         db.session.commit()
         return redirect(url_for("main_feed"))
-    return render_template ("new_recipe.html", new_recipe_form = edit_recipe_form, is_edit = True, current_user=current_user)
+    return render_template ("edit_recipe.html", new_recipe_form = edit_recipe_form, is_edit = True, current_user=current_user)
 
 @app.route("/delete-recipe/<recipe_id>", methods=["GET", "POST"])
 @login_required

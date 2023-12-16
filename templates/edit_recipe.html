@@ -1,22 +1,43 @@
 {% include "header.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-
-<!-- This is the section that I need to work on so that save_recipe can be paired down -->
-<!-- I think what I'll need to do is use a regular form rather than a wtf form -->
 <body>
     <div>
-        <!-- This H1 will need to change based on if this is a new recipe or not -->
-        <h1 id="edit-h1">Edit Recipe:</h1>
+        {% if is_edit: %}
+            <h1 id="edit-h1">Edit Recipe:</h1>
+        {% else %}
+            <h1 id="edit-h1">New Recipe:</h1>
+        {% endif %}
         <form>
-            <!-- Recipe ID -->
-            <!-- Title -->
-            <!-- Description / Long text Editor -->
-            <!-- Ingredients and Instructions need to be reanalyzed. could probably be done with input boxes or something to force unifomity of data -->
-            <!-- Ingredients -->
-            <!-- Instructions -->
-            <!-- Generate Images or Regenertate / will depend on if its a new recipe or not -->
-            <!-- Submit Button -->
+            {% if is_edit: %}
+                <input type="hidden" name="title" id="displayTitle" value="{{ recipe_id }}">
+            {% endif %}
+            <br>
+            <h3><label for="recipeTitle">Recipe Title:</label></h3>
+            <input type="text" id="recipeTitle" name="recipeTitle">
+            <br><br>
+            <h3><label for="recipeDescription">Recipe Description:</label></h3>
+            <textarea name="recipeDescription" rows="10" cols="50"></textarea>
+            <br>
+            <div>
+                <h3>Ingredients:</h3>
+                <input type="text" id="ingredient" name="ingredient">
+                <button>X</button>
+                <button>Add Ingredient</button>
+            </div>
+            <br>
+            <div>
+                <h3>Instructions:</h3>
+                <input type="text" id="instructionStep" name="instructionStep">
+                <button>X</button>
+                <button>Add Step</button>
+            </div>
+            <br>
+            {% if is_edit %}
+                <button>Generate New Image</button>
+            {% else %}
+                <button>Generate Images</button>
+            {% endif %}
         </form>
     </div>
 </body>
