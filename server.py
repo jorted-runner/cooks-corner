@@ -187,18 +187,18 @@ def ai_generation():
 @app.route("/new-recipe", methods=["GET", "POST"])
 @login_required
 def new_recipe():
-    new_recipe_form = NewRecipe()
     is_edit = False
-    new_recipe_form.set_submit_label(is_edit)
-    if new_recipe_form.validate_on_submit():
-        title = request.form.get("title")
-        description = request.form.get("description")
-        ingredients = request.form.get("ingredients")
-        instructions = request.form.get("instructions")
-        image_urls = RECIPE_AI.image_generation(title, ingredients)
-        return render_template('display_recipe.html', recipe_title = title, recipe_desc = description, ingredients = ingredients, instructions = instructions, images = image_urls)
-    return render_template('edit_recipe.html', new_recipe_form = new_recipe_form, is_edit = is_edit)
+    # if new_recipe_form.validate_on_submit():
+    #     title = request.form.get("title")
+    #     description = request.form.get("description")
+    #     ingredients = request.form.get("ingredients")
+    #     instructions = request.form.get("instructions")
+    #     image_urls = RECIPE_AI.image_generation(title, ingredients)
+    #     return render_template('display_recipe.html', recipe_title = title, recipe_desc = description, ingredients = ingredients, instructions = instructions, images = image_urls)
+    # This return will also need to be changed now that i'm not using the form
+    return render_template('edit_recipe.html', is_edit = is_edit)
 
+# This will need to change now that i'm not using the WTF form
 @app.route("/edit-recipe/<recipe_id>", methods=["GET", "POST"])
 @login_required
 def edit_recipe(recipe_id):
@@ -222,7 +222,6 @@ def delete_recipe(recipe_id):
     db.session.delete(recipe_to_delete)
     db.session.commit()
     return redirect(url_for('main_feed'))
-
 
 # This function is going to get refactored. First I need to adjust new_recipe.html to handle the data better.
 @app.route("/save-recipe/<isNew>", methods=["POST"])
@@ -298,10 +297,6 @@ def regen_images():
 def logout():
     logout_user()
     return redirect(url_for('home'))
-
-@app.route('/childrens-book')
-def book_image_generation():
-    return render_template("children-image.html")
 
 @app.route("/gen_images", methods=["POST"])
 def gen_images():

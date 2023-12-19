@@ -18,23 +18,6 @@ class Recipe(FlaskForm):
     img_url = StringField("Upload File", validators=[DataRequired()])
     save = SubmitField("Save Recipe")
 
-class NewRecipe(FlaskForm):
-    recipe_id = HiddenField("Recipe ID")
-    title = StringField("Recipe Title", validators=[DataRequired()])
-    description = TextAreaField("Recipe Description", validators=[DataRequired()])
-    ingredients = CKEditorField("Ingredients", validators=[DataRequired()])
-    instructions = CKEditorField("Instructions", validators=[DataRequired()])
-    # uploaded_img = FileField("Upload File", validators=[
-    #     FileRequired(),
-    #     FileAllowed(['jpg', 'png', 'jpeg', 'heic'], 'Images Only!')
-    # ])
-    save = SubmitField("Generate Recipe Images")
-
-    def set_submit_label(self, is_edit):
-        if is_edit:
-            self.save.label.text = "Save Changes"
-        else:
-            self.save.label.text = "Generate Recipe Images"
 
 class NewUser(FlaskForm):
     name = StringField("Full Name", validators=[DataRequired()])

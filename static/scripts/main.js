@@ -45,6 +45,7 @@ function regenImages() {
         }
     });
 }
+
 // Submit recipe from display_recipe.html
 const displaySubmitButton = document.querySelector("#displaySubmitButton").addEventListener("click", submitRecipeForm);
 function submitRecipeForm(event) {
