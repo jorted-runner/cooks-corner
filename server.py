@@ -162,6 +162,7 @@ def main_feed():
     all_recipes = Recipe.query.all()
     return render_template("main_feed.html", all_recipes=reversed(all_recipes))
 
+# This will probably need to be changed too
 @app.route("/recipe-gen", methods=["POST", "GET"])
 @login_required
 def ai_generation():
